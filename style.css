@@ -101,6 +101,7 @@ a:focus {
 .twit {
   /* flex: 0 1 28%;
   display: flex; */
+  margin-bottom: 16px;
   margin: 2px;
   padding: 20px;
   border: 1px solid #dadada;

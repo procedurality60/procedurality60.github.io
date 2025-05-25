@@ -96,14 +96,17 @@ a:focus {
   margin: 50px 10%;
   display: flex;
   flex-wrap: wrap;
+  flex-direction: column; /* Aligns tweets in a single column */
+  gap: 20px; /* Adds space between tweets */
+
 }
 
 .twit {
   flex: 0 1 28%;
   display: flex;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   margin: 2px;
-  padding: 20px;
+  padding: 10px;
   border: 1px solid #dadada;
   border-radius: 2px;
   background-color: #fff;

@@ -135,78 +135,129 @@
       </article> </main>
 
     
-    <button type="button" id="create-twit-button"><i class="fas fa-bullhorn"></i></button>
-    
-    <div id="modal-backdrop" class="hidden"></div>
-    <div id="create-twit-modal" class="hidden">
-      <div class="modal-dialog">
-        <div class="modal-header">
-          <!-- The form starts in the header and ends in the footer -->
-          <form id="myForm" enctype="multipart/form-data">
-            <h3>Create a Twit</h3>
-            <button type="button" class="modal-close-button">&times;</button>
-        </div>
-        <div class="modal-body">
-          <div class="twit-input-element">
-            <label for="twit-text-input">Twit text</label>
-            <textarea id="twit-text-input" name="twitText"></textarea>
-          </div>
-          <div class="twit-input-element">
-            <label for="twit-text-input">Description (optional)</label>
-            <textarea id="twit-text-input" name="twitText"></textarea>
-          </div>
-          <div class="twit-input-element">
-            <label for="twit-attribution-input">Author</label>
-            <p>(@ is recommended)</p>
-            <input type="text" name="name" id="twit-attribution-input" required>
-          </div>
-          <!-- Added file input for image upload -->
-          <div class="twit-input-element">
-            <label for="twit-image-upload">Upload Image (optional)</label>
-            <input type="file" name="twitImage" id="twit-image-upload" accept="image/*">
-            <img id="image-preview" src="" alt="Image preview">
-          </div>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="modal-cancel-button">Cancel</button>
-            <button type="submit" class="modal-accept-button">Create Twit</button>
-          </form>
-        </div>
-      </div>
+    <!-- Button to open the modal -->
+<button type="button" id="create-twit-button">
+  <i class="fas fa-bullhorn"></i>
+</button>
+
+<!-- Modal backdrop and modal container (hidden by default via CSS) -->
+<div id="modal-backdrop" class="hidden"></div>
+<div id="create-twit-modal" class="hidden">
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <h3>Create a Twit</h3>
+      <button type="button" class="modal-close-button">&times;</button>
     </div>
-  
-    <script>
-      // Handle the form submission using fetch and FormData
-      document.getElementById("myForm").addEventListener("submit", function(event) {
-          event.preventDefault();
-          const formData = new FormData(event.target);
-          
-          fetch("https://formsubmit.co/proceduralitytutorials@gmail.com", {
-              method: "POST",
-              body: formData
-          })
-          .then(response => response.json())
-          .then(data => console.log("Success:", data))
-          .catch(error => console.error("Error:", error));
-      });
-      
-      // Handle the image preview when a file is selected
-      document.getElementById("twit-image-upload").addEventListener("change", function() {
-          const file = this.files[0];
-          const preview = document.getElementById("image-preview");
-          
-          if (file && file.type.startsWith("image/")) {
-              const reader = new FileReader();
-              reader.addEventListener("load", function() {
-                  preview.src = reader.result;
-                  preview.style.display = "block";
-              });
-              reader.readAsDataURL(file);
-          } else {
-              preview.src = "";
-              preview.style.display = "none";
-          }
-      });
-    </script>
+    <div class="modal-body">
+      <form id="twitForm">
+        <!-- Title (Twit Text) in Bold -->
+        <div class="twit-input-element">
+          <label for="twit-text">Twit Text (Title):</label>
+          <textarea 
+            id="twit-text" 
+            name="twitText" 
+            required 
+            style="font-weight: bold;"
+          ></textarea>
+        </div>
+
+        <!-- Description in Light Grey -->
+        <div class="twit-input-element">
+          <label for="twit-description">Description:</label>
+          <textarea 
+            id="twit-description" 
+            name="twitDescription" 
+            style="color: lightgrey;"
+          ></textarea>
+        </div>
+
+        <!-- Author with color #FAFAFA -->
+        <div class="twit-input-element">
+          <label for="twit-author">Author:</label>
+          <input 
+            type="text" 
+            name="name" 
+            id="twit-author" 
+            required 
+            style="color: #FAFAFA;"
+          >
+        </div>
+
+        <!-- Website URL field and favicon preview -->
+        <div class="twit-input-element">
+          <label for="twit-url">Website URL (optional):</label>
+          <input 
+            type="url" 
+            name="twitUrl" 
+            id="twit-url" 
+            placeholder="https://example.com"
+          >
+          <div id="favicon-container" style="margin-top: 5px; display: none;">
+            <a id="favicon-link" href="" target="_blank">
+              <img 
+                id="favicon-preview" 
+                src="" 
+                style="width:64px; height:64px;" 
+                alt="Favicon preview"
+              >
+            </a>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="modal-cancel-button">Cancel</button>
+          <button type="submit" class="modal-accept-button">Post Twit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  // --- Favicon Preview via URL Field ---
+  document.getElementById("twit-url").addEventListener("change", function() {
+    const urlVal = this.value.trim();
+    const faviconContainer = document.getElementById("favicon-container");
+    const faviconLink = document.getElementById("favicon-link");
+    const faviconPreview = document.getElementById("favicon-preview");
+    
+    if (urlVal) {
+      try {
+        // Validate and parse the URL
+        const urlObj = new URL(urlVal);
+        const fullUrl = urlObj.href;
+        // Generate a larger favicon using Google's service (64px in this example)
+        const faviconUrl = "https://www.google.com/s2/favicons?sz=64&domain_url=" + encodeURIComponent(fullUrl);
+        faviconPreview.src = faviconUrl;
+        faviconLink.href = fullUrl;
+        faviconContainer.style.display = "block";
+      } catch (e) {
+        console.error("Invalid URL", e);
+        faviconContainer.style.display = "none";
+      }
+    } else {
+      faviconContainer.style.display = "none";
+    }
+  });
+
+  // --- AJAX Submission (Prevents Page Refresh/Redirect) ---
+  document.getElementById("twitForm").addEventListener("submit", function(event) {
+    event.preventDefault(); // Prevents a page refresh or redirect upon submission
+    const formData = new FormData(this);
+
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", "https://formsubmit.co/proceduralitytutorials@gmail.com", true);
+    xhr.onload = function() {
+      if (xhr.status === 200) {
+        alert("Twit posted successfully!");
+        // Optionally, you could clear the form or close the modal here.
+      } else {
+        alert("Error posting twit.");
+      }
+    };
+    xhr.send(formData);
+  });
+</script>
+</main>
   </body>
 </html>

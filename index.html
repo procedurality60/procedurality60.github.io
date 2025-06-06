@@ -140,7 +140,6 @@
   <i class="fas fa-bullhorn"></i>
 </button>
 
-<!-- Modal backdrop and modal container (hidden by default via CSS) -->
 <div id="modal-backdrop" class="hidden"></div>
 <div id="create-twit-modal" class="hidden">
   <div class="modal-dialog">
@@ -150,60 +149,62 @@
     </div>
     <div class="modal-body">
       <form id="twitForm">
-        <!-- Title (Twit Text) in Bold -->
+        <!-- Website URL and Favicon Preview at the very top -->
         <div class="twit-input-element">
-          <label for="twit-text">Twit Text (Title):</label>
-          <textarea 
-            id="twit-text" 
-            name="twitText" 
-            required 
-            style="font-weight: bold;"
-          ></textarea>
-        </div>
-
-        <!-- Description in Light Grey -->
-        <div class="twit-input-element">
-          <label for="twit-description">Description:</label>
-          <textarea 
-            id="twit-description" 
-            name="twitDescription" 
-            style="color: lightgrey;"
-          ></textarea>
-        </div>
-
-        <!-- Author with color #FAFAFA -->
-        <div class="twit-input-element">
-          <label for="twit-author">Author:</label>
-          <input 
-            type="text" 
-            name="name" 
-            id="twit-author" 
-            required 
-            style="color: #FAFAFA;"
-          >
-        </div>
-
-        <!-- Website URL field and favicon preview -->
-        <div class="twit-input-element">
-          <label for="twit-url">Website URL (optional):</label>
-          <input 
-            type="url" 
-            name="twitUrl" 
-            id="twit-url" 
-            placeholder="https://example.com"
+          <label for="twit-url"</label>
+          <input
+            type="url"
+            name="twitUrl"
+            id="twit-url"
+            placeholder="Paste the URL"
           >
           <div id="favicon-container" style="margin-top: 5px; display: none;">
             <a id="favicon-link" href="" target="_blank">
-              <img 
-                id="favicon-preview" 
-                src="" 
-                style="width:64px; height:64px;" 
+              <img
+                id="favicon-preview"
+                src=""
+                style="width: 64px; height: 64px;"
                 alt="Favicon preview"
               >
             </a>
           </div>
         </div>
-
+        
+        <!-- Title / Twit Text (Bold) -->
+        <div class="twit-input-element">
+          <label for="twit-text"></label>
+          <textarea
+            id="twit-text"
+            name="twitText"
+            placeholder="Give it a a title"
+            
+            required
+            style="font-weight: bold;"
+          ></textarea>
+        </div>
+        
+        <!-- Description (Light Grey) -->
+        <div class="twit-input-element">
+          <label for="twit-description">Description:</label>
+          <textarea
+            id="twit-description"
+            name="twitDescription"
+            style="color: lightgrey;"
+          ></textarea>
+        </div>
+        
+        <!-- Author (#FAFAFA) -->
+        <div class="twit-input-element">
+          <label for="twit-author">Author:</label>
+          <input
+            type="text"
+            name="name"
+            id="twit-author"
+            required
+            style="color: #FAFAFA;"
+          >
+        </div>
+        
         <div class="modal-footer">
           <button type="button" class="modal-cancel-button">Cancel</button>
           <button type="submit" class="modal-accept-button">Post Twit</button>
@@ -214,19 +215,19 @@
 </div>
 
 <script>
-  // --- Favicon Preview via URL Field ---
+  // Favicon preview functionality: when the URL field changes...
   document.getElementById("twit-url").addEventListener("change", function() {
     const urlVal = this.value.trim();
     const faviconContainer = document.getElementById("favicon-container");
     const faviconLink = document.getElementById("favicon-link");
     const faviconPreview = document.getElementById("favicon-preview");
-    
+
     if (urlVal) {
       try {
-        // Validate and parse the URL
+        // Validate the URL
         const urlObj = new URL(urlVal);
         const fullUrl = urlObj.href;
-        // Generate a larger favicon using Google's service (64px in this example)
+        // Retrieve a larger favicon (64px) via Google's favicon service
         const faviconUrl = "https://www.google.com/s2/favicons?sz=64&domain_url=" + encodeURIComponent(fullUrl);
         faviconPreview.src = faviconUrl;
         faviconLink.href = fullUrl;
@@ -240,17 +241,17 @@
     }
   });
 
-  // --- AJAX Submission (Prevents Page Refresh/Redirect) ---
+  // AJAX submission that prevents the page from redirecting/refreshing
   document.getElementById("twitForm").addEventListener("submit", function(event) {
-    event.preventDefault(); // Prevents a page refresh or redirect upon submission
+    event.preventDefault(); // Prevent default form submission
     const formData = new FormData(this);
-
+    
     const xhr = new XMLHttpRequest();
     xhr.open("POST", "https://formsubmit.co/proceduralitytutorials@gmail.com", true);
     xhr.onload = function() {
       if (xhr.status === 200) {
         alert("Twit posted successfully!");
-        // Optionally, you could clear the form or close the modal here.
+        // Optionally, you can also clear the form or hide the modal here.
       } else {
         alert("Error posting twit.");
       }

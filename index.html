@@ -149,60 +149,38 @@
     </div>
     <div class="modal-body">
       <form id="twitForm">
-        <!-- Website URL and Favicon Preview at the very top -->
+        <!-- Website URL and favicon preview at the top -->
         <div class="twit-input-element">
-          <label for="twit-url"</label>
-          <input
-            type="url"
-            name="twitUrl"
-            id="twit-url"
-            placeholder="Paste the URL"
-          >
+          <label for="twit-url">Website URL (optional):</label>
+          <input type="url" name="twitUrl" id="twit-url" placeholder="https://example.com">
           <div id="favicon-container" style="margin-top: 5px; display: none;">
             <a id="favicon-link" href="" target="_blank">
-              <img
-                id="favicon-preview"
-                src=""
-                style="width: 64px; height: 64px;"
-                alt="Favicon preview"
-              >
+              <img id="favicon-preview" src="" style="width: 64px; height: 64px;" alt="Favicon preview">
             </a>
           </div>
         </div>
         
-        <!-- Title / Twit Text (Bold) -->
+        <!-- Title in Bold -->
         <div class="twit-input-element">
-          <label for="twit-text"></label>
-          <textarea
-            id="twit-text"
-            name="twitText"
-            placeholder="Give it a a title"
-            
-            required
-            style="font-weight: bold;"
-          ></textarea>
+          <label for="twit-text">Title:</label>
+          <textarea id="twit-text" name="twitText" required style="font-weight: bold;"></textarea>
         </div>
         
-        <!-- Description (Light Grey) -->
+        <!-- Description in Light Grey -->
         <div class="twit-input-element">
           <label for="twit-description">Description:</label>
-          <textarea
-            id="twit-description"
-            name="twitDescription"
-            style="color: lightgrey;"
-          ></textarea>
+          <textarea id="twit-description" name="twitDescription" style="color: lightgrey;"></textarea>
         </div>
         
-        <!-- Author (#FAFAFA) -->
+        <!-- Username field with SVG icon above it and input text set to orange -->
         <div class="twit-input-element">
-          <label for="twit-author">Author:</label>
-          <input
-            type="text"
-            name="name"
-            id="twit-author"
-            required
-            style="color: #FAFAFA;"
-          >
+          <label for="twit-author">Username:</label>
+          <div class="username-icon" style="margin-bottom: 5px;">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="#fbbd08" width="10mm" height="10mm" viewBox="0 0 32 32">
+              <path d="M16 15.503A5.041 5.041 0 1 0 16 5.42a5.041 5.041 0 0 0 0 10.083zm0 2.215c-6.703 0-11 3.699-11 5.5v3.363h22v-3.363c0-2.178-4.068-5.5-11-5.5z"/>
+            </svg>
+          </div>
+          <input type="text" name="name" id="twit-author" required style="color: orange;">
         </div>
         
         <div class="modal-footer">
@@ -215,7 +193,7 @@
 </div>
 
 <script>
-  // Favicon preview functionality: when the URL field changes...
+  // Favicon preview functionality:
   document.getElementById("twit-url").addEventListener("change", function() {
     const urlVal = this.value.trim();
     const faviconContainer = document.getElementById("favicon-container");
@@ -224,10 +202,10 @@
 
     if (urlVal) {
       try {
-        // Validate the URL
+        // Validate and parse the URL.
         const urlObj = new URL(urlVal);
         const fullUrl = urlObj.href;
-        // Retrieve a larger favicon (64px) via Google's favicon service
+        // Retrieve a larger favicon (64px) via Google's favicon service.
         const faviconUrl = "https://www.google.com/s2/favicons?sz=64&domain_url=" + encodeURIComponent(fullUrl);
         faviconPreview.src = faviconUrl;
         faviconLink.href = fullUrl;
@@ -241,17 +219,15 @@
     }
   });
 
-  // AJAX submission that prevents the page from redirecting/refreshing
+  // AJAX submission functionality prevents page refresh/redirect:
   document.getElementById("twitForm").addEventListener("submit", function(event) {
-    event.preventDefault(); // Prevent default form submission
+    event.preventDefault(); // Prevents default form submission.
     const formData = new FormData(this);
-    
     const xhr = new XMLHttpRequest();
     xhr.open("POST", "https://formsubmit.co/proceduralitytutorials@gmail.com", true);
     xhr.onload = function() {
       if (xhr.status === 200) {
         alert("Twit posted successfully!");
-        // Optionally, you can also clear the form or hide the modal here.
       } else {
         alert("Error posting twit.");
       }

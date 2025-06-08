@@ -2,55 +2,170 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <style>
+      /* Basic global styling */
+body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+header, main, footer {
+  padding: 20px;
+}
+
+/* Header styling */
+header {
+  background: #f3f3f3;
+  text-align: center;
+}
+
+.site-title {
+  margin: 0;
+}
+
+/* Main content styling */
+.twit-container article {
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 15px;
+  display: flex;
+  gap: 10px;
+}
+
+.twit-icon {
+  font-size: 24px;
+  color: #888;
+}
+
+.twit-content {
+  flex-grow: 1;
+}
+
+/* Footer styling */
+footer {
+  background: #f3f3f3;
+  text-align: center;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+}
+
+#create-twit-button {
+  background: none;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  padding: 5px;
+}
+
+/* Modal styling */
+#modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: none;
+}
+
+#create-twit-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  display: none;
+  width: 300px;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-body {
+  margin-top: 10px;
+}
+
+.modal-footer {
+  margin-top: 10px;
+  text-align: right;
+}
+
+.modal-close-button,
+.modal-cancel-button,
+.modal-accept-button {
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.modal-close-button {
+  font-size: 18px;
+  background: none;
+}
+
+.modal-accept-button {
+  background-color: #4CAF50;
+  color: white;
+}
+
+/* Favicon preview container styling */
+#favicon-container {
+  margin-top: 5px;
+  display: none;
+}
+
+#favicon-preview {
+  width: 64px;
+  height: 64px;
+}
+
+/* Twit input styling */
+.twit-input-element {
+  margin-bottom: 10px;
+}
+
+.twit-input-element label {
+  display: block;
+  margin-bottom: 3px;
+}
+
+.twit-input-element input,
+.twit-input-element textarea {
+  width: 100%;
+  padding: 5px;
+  box-sizing: border-box;
+}
+      </style>
     <title>Tweeter</title>
 
     <!-- 3rd-party stylesheet for the "Roboto" font -->
-    <link
-      href="https://fonts.googleapis.com/css?family=Roboto:100,400,700"
-      rel="stylesheet">
-      
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700" rel="stylesheet">
+    
     <!-- 3rd-party stylesheet for Font Awesome icons -->
-    <link
-      rel="stylesheet"
-      href="https://use.fontawesome.com/releases/v5.13.0/css/all.css"
-      crossorigin="anonymous">
-
-    <link rel="stylesheet" href="style.css" media="screen">
-    <style>
-      /* Additional CSS for image preview (can be placed in style.css) */
-      #image-preview {
-        margin-top: 10px;
-        max-width: 100%;
-        display: none;
-        border: 1px solid #ccc;
-        padding: 5px;
-      }
-    </style>
-    <script src="index.js" charset="utf-8" defer></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css" crossorigin="anonymous">
+    
+    <!-- Link to external CSS file -->
+    <link rel="stylesheet" href="style.css">
   </head>
   <body>
     <header>
-      <!-- The bullhorn icon from Font Awesome -->
-    <p> <center> <a href="#"><h1 class="site-title"><i class="far fa-hand-lizard"></i> Links Daily</h1></a> </center> </p>
-      <nav class="navbar">
-        <ul class="navlist">
-          <li class="navitem navlink active"><a href="#">Home</a></li>
-          <li class="navitem navlink"><a href="Trending.html">Trending</a></li>
-          <li class="navitem navlink"><a href="people.html">People</a></li>
-          <li class="navitem navbar-search">
-            <input type="text" id="navbar-search-input" placeholder="Search...">
-            <button type="button" id="navbar-search-button"><i class="fas fa-search"></i></button>
-          </li>
-        </ul>
-      </nav>
+      <a href="#">
+        <h1 class="site-title">
+          <i class="far fa-hand-lizard"></i> Links Daily
+        </h1>
+      </a>
     </header>
-<main class="twit-container">
-
+    
     <main class="twit-container">
-    <article class="twit">
-
-     
-        <div class="twit-icon">
+       <div class="twit-icon">
           <i class="fas fa-bullhorn"></i>
         </div>
         <div class="twit-content">
@@ -133,108 +248,126 @@
           </p>
         </div>
       </article> </main>
-
+      
+      <!-- Add more twits as needed -->
+    </main>
     
-    <!-- Button to open the modal -->
-<button type="button" id="create-twit-button">
-  <i class="fas fa-bullhorn"></i>
-</button>
-
-<div id="modal-backdrop" class="hidden"></div>
-<div id="create-twit-modal" class="hidden">
-  <div class="modal-dialog">
-    <div class="modal-header">
-      <h3>Create a Twit</h3>
-      <button type="button" class="modal-close-button">&times;</button>
-    </div>
-    <div class="modal-body">
-      <form id="twitForm">
-        <!-- Website URL and favicon preview at the top -->
-        <div class="twit-input-element">
-          <label for="twit-url">Website URL (optional):</label>
-          <input type="url" name="twitUrl" id="twit-url" placeholder="https://example.com">
-          <div id="favicon-container" style="margin-top: 5px; display: none;">
-            <a id="favicon-link" href="" target="_blank">
-              <img id="favicon-preview" src="" style="width: 64px; height: 64px;" alt="Favicon preview">
-            </a>
+    <!-- Footer containing the Create Twit Button -->
+    <footer>
+      <button type="button" id="create-twit-button">⋮☰</button>
+    </footer>
+    
+    <!-- Modal for Creating a Twit -->
+    <div id="modal-backdrop"></div>
+    <div id="create-twit-modal">
+      <div class="modal-header">
+        <h3>Create a Twit</h3>
+        <button type="button" class="modal-close-button">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="twitForm">
+          <!-- Website URL Input with Favicon Preview -->
+          <div class="twit-input-element">
+            <label for="twit-url">Website URL (optional):</label>
+            <input type="url" name="twitUrl" id="twit-url" placeholder="https://example.com">
+            <div id="favicon-container">
+              <a id="favicon-link" href="" target="_blank">
+                <img id="favicon-preview" src="" alt="Favicon preview">
+              </a>
+            </div>
           </div>
-        </div>
-        
-        <!-- Title in Bold -->
-        <div class="twit-input-element">
-          <label for="twit-text">Title:</label>
-          <textarea id="twit-text" name="twitText" required style="font-weight: bold;"></textarea>
-        </div>
-        
-        <!-- Description in Light Grey -->
-        <div class="twit-input-element">
-          <label for="twit-description">Description:</label>
-          <textarea id="twit-description" name="twitDescription" style="color: lightgrey;"></textarea>
-        </div>
-        
-        <!-- Username field with SVG icon above it and input text set to orange -->
-        <div class="twit-input-element">
-          <label for="twit-author">Username:</label>
-          <div class="username-icon" style="margin-bottom: 5px;">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="#fbbd08" width="10mm" height="10mm" viewBox="0 0 32 32">
-              <path d="M16 15.503A5.041 5.041 0 1 0 16 5.42a5.041 5.041 0 0 0 0 10.083zm0 2.215c-6.703 0-11 3.699-11 5.5v3.363h22v-3.363c0-2.178-4.068-5.5-11-5.5z"/>
-            </svg>
+          <!-- Title Input -->
+          <div class="twit-input-element">
+            <label for="twit-text">Title:</label>
+            <textarea id="twit-text" name="twitText" required style="font-weight: bold;"></textarea>
           </div>
-          <input type="text" name="name" id="twit-author" required style="color: orange;">
-        </div>
-        
-        <div class="modal-footer">
-          <button type="button" class="modal-cancel-button">Cancel</button>
-          <button type="submit" class="modal-accept-button">Post Twit</button>
-        </div>
-      </form>
+          <!-- Description Input -->
+          <div class="twit-input-element">
+            <label for="twit-description">Description:</label>
+            <textarea id="twit-description" name="twitDescription" style="color: lightgrey;"></textarea>
+          </div>
+          <!-- Username Input -->
+          <div class="twit-input-element">
+            <label for="twit-author">Username:</label>
+            <input type="text" name="name" id="twit-author" required style="color: orange;">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="modal-cancel-button">Cancel</button>
+            <button type="submit" class="modal-accept-button">Post Twit</button>
+          </div>
+        </form>
+      </div>
     </div>
-  </div>
-</div>
-
-<script>
-  // Favicon preview functionality:
-  document.getElementById("twit-url").addEventListener("change", function() {
-    const urlVal = this.value.trim();
-    const faviconContainer = document.getElementById("favicon-container");
-    const faviconLink = document.getElementById("favicon-link");
-    const faviconPreview = document.getElementById("favicon-preview");
-
-    if (urlVal) {
-      try {
-        // Validate and parse the URL.
-        const urlObj = new URL(urlVal);
-        const fullUrl = urlObj.href;
-        // Retrieve a larger favicon (64px) via Google's favicon service.
-        const faviconUrl = "https://www.google.com/s2/favicons?sz=64&domain_url=" + encodeURIComponent(fullUrl);
-        faviconPreview.src = faviconUrl;
-        faviconLink.href = fullUrl;
-        faviconContainer.style.display = "block";
-      } catch (e) {
-        console.error("Invalid URL", e);
-        faviconContainer.style.display = "none";
-      }
-    } else {
-      faviconContainer.style.display = "none";
-    }
-  });
-
-  // AJAX submission functionality prevents page refresh/redirect:
-  document.getElementById("twitForm").addEventListener("submit", function(event) {
-    event.preventDefault(); // Prevents default form submission.
-    const formData = new FormData(this);
-    const xhr = new XMLHttpRequest();
-    xhr.open("POST", "https://formsubmit.co/proceduralitytutorials@gmail.com", true);
-    xhr.onload = function() {
-      if (xhr.status === 200) {
-        alert("Twit posted successfully!");
-      } else {
-        alert("Error posting twit.");
-      }
-    };
-    xhr.send(formData);
-  });
-</script>
-</main>
+    
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        const createTwitButton = document.getElementById("create-twit-button");
+        const modalBackdrop = document.getElementById("modal-backdrop");
+        const createTwitModal = document.getElementById("create-twit-modal");
+        const closeButton = document.querySelector(".modal-close-button");
+        const cancelButton = document.querySelector(".modal-cancel-button");
+        const twitForm = document.getElementById("twitForm");
+        
+        // Function to show the modal
+        function showModal() {
+          modalBackdrop.style.display = "block";
+          createTwitModal.style.display = "block";
+        }
+        
+        // Function to hide the modal
+        function hideModal() {
+          modalBackdrop.style.display = "none";
+          createTwitModal.style.display = "none";
+        }
+        
+        // Open and close modal events
+        createTwitButton.addEventListener("click", showModal);
+        closeButton.addEventListener("click", hideModal);
+        cancelButton.addEventListener("click", hideModal);
+        modalBackdrop.addEventListener("click", hideModal);
+        
+        // Favicon preview functionality: watch for changes in the URL field
+        document.getElementById("twit-url").addEventListener("change", function() {
+          const urlVal = this.value.trim();
+          const faviconContainer = document.getElementById("favicon-container");
+          const faviconLink = document.getElementById("favicon-link");
+          const faviconPreview = document.getElementById("favicon-preview");
+        
+          if (urlVal) {
+            try {
+              const urlObj = new URL(urlVal);
+              const fullUrl = urlObj.href;
+              const faviconUrl = "https://www.google.com/s2/favicons?sz=64&domain_url=" + encodeURIComponent(fullUrl);
+              faviconPreview.src = faviconUrl;
+              faviconLink.href = fullUrl;
+              faviconContainer.style.display = "block";
+            } catch (e) {
+              console.error("Invalid URL", e);
+              faviconContainer.style.display = "none";
+            }
+          } else {
+            faviconContainer.style.display = "none";
+          }
+        });
+        
+        // AJAX submission functionality to prevent page refresh/redirect:
+        twitForm.addEventListener("submit", function(event) {
+          event.preventDefault();
+          const formData = new FormData(this);
+          const xhr = new XMLHttpRequest();
+          xhr.open("POST", "https://formsubmit.co/proceduralitytutorials@gmail.com", true);
+          xhr.onload = function() {
+            if (xhr.status === 200) {
+              alert("Twit posted successfully!");
+              hideModal();
+              twitForm.reset();
+            } else {
+              alert("Error posting twit.");
+            }
+          };
+          xhr.send(formData);
+        });
+      });
+    </script>
   </body>
 </html>

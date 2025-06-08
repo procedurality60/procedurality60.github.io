@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <style>
+
       /* Basic global styling */
 body {
   font-family: 'Roboto', sans-serif;
@@ -25,6 +26,10 @@ header {
 }
 
 /* Main content styling */
+.twit-container {
+  padding-bottom: 100px; /* Extra padding to prevent fixed footer overlap */
+}
+
 .twit-container article {
   border: 1px solid #ddd;
   padding: 10px;
@@ -49,6 +54,8 @@ footer {
   position: fixed;
   width: 100%;
   bottom: 0;
+  left: 0;
+  padding: 10px 20px;
 }
 
 #create-twit-button {
@@ -68,6 +75,7 @@ footer {
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
   display: none;
+  z-index: 10;
 }
 
 #create-twit-modal {
@@ -81,6 +89,7 @@ footer {
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
   display: none;
   width: 300px;
+  z-index: 11;
 }
 
 .modal-header {
@@ -127,7 +136,7 @@ footer {
   height: 64px;
 }
 
-/* Twit input styling */
+/* Twit form input styling */
 .twit-input-element {
   margin-bottom: 10px;
 }
@@ -143,14 +152,19 @@ footer {
   padding: 5px;
   box-sizing: border-box;
 }
-      </style>
+    </style>
     <title>Tweeter</title>
-
-    <!-- 3rd-party stylesheet for the "Roboto" font -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700" rel="stylesheet">
     
-    <!-- 3rd-party stylesheet for Font Awesome icons -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css" crossorigin="anonymous">
+    <!-- Roboto font -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:100,400,700"
+      rel="stylesheet">
+    
+    <!-- Font Awesome icons -->
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.13.0/css/all.css"
+      crossorigin="anonymous">
     
     <!-- Link to external CSS file -->
     <link rel="stylesheet" href="style.css">
@@ -165,7 +179,10 @@ footer {
     </header>
     
     <main class="twit-container">
-       <div class="twit-icon">
+      <article class="twit">
+
+     
+        <div class="twit-icon">
           <i class="fas fa-bullhorn"></i>
         </div>
         <div class="twit-content">
@@ -247,12 +264,10 @@ footer {
             <a href="people.html">@Hess</a>
           </p>
         </div>
-      </article> </main>
-      
-      <!-- Add more twits as needed -->
+      </article>
     </main>
     
-    <!-- Footer containing the Create Twit Button -->
+    <!-- Footer with Create Twit Button -->
     <footer>
       <button type="button" id="create-twit-button">⋮☰</button>
     </footer>
@@ -308,25 +323,22 @@ footer {
         const cancelButton = document.querySelector(".modal-cancel-button");
         const twitForm = document.getElementById("twitForm");
         
-        // Function to show the modal
+        // Functions to show/hide the modal
         function showModal() {
           modalBackdrop.style.display = "block";
           createTwitModal.style.display = "block";
         }
-        
-        // Function to hide the modal
         function hideModal() {
           modalBackdrop.style.display = "none";
           createTwitModal.style.display = "none";
         }
         
-        // Open and close modal events
         createTwitButton.addEventListener("click", showModal);
         closeButton.addEventListener("click", hideModal);
         cancelButton.addEventListener("click", hideModal);
         modalBackdrop.addEventListener("click", hideModal);
         
-        // Favicon preview functionality: watch for changes in the URL field
+        // Favicon preview functionality
         document.getElementById("twit-url").addEventListener("change", function() {
           const urlVal = this.value.trim();
           const faviconContainer = document.getElementById("favicon-container");
@@ -350,7 +362,7 @@ footer {
           }
         });
         
-        // AJAX submission functionality to prevent page refresh/redirect:
+        // AJAX submission functionality
         twitForm.addEventListener("submit", function(event) {
           event.preventDefault();
           const formData = new FormData(this);

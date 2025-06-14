@@ -17,6 +17,9 @@
     
     <!-- Link to external CSS file -->
     <link rel="stylesheet" href="style.css">
+    
+    <!-- Link to external JS file (defer ensures it loads after HTML parsing) -->
+    <script src="index.js" defer></script>
   </head>
   <body>
     <header>
@@ -40,7 +43,6 @@
     </nav>
     
     <main class="twit-container">
-      <main class="twit-container">
       <article class="twit">
 
      
@@ -128,7 +130,6 @@
         </div>
       </article>
     </main>
-   
     
     <!-- Footer for the create‑twit button -->
     <footer>
@@ -171,47 +172,5 @@
         </div>
       </div>
     </div>
-    
-    <script>
-      document.addEventListener("DOMContentLoaded", function() {
-        const createButton = document.getElementById("create-twit-button");
-        const backdrop = document.getElementById("modal-backdrop");
-        const modal = document.getElementById("create-twit-modal");
-        const closeButton = document.querySelector(".modal-close-button");
-        const cancelButton = document.querySelector(".modal-cancel-button");
-        const form = document.getElementById("twitForm");
-        
-        function showModal() {
-          backdrop.classList.remove("hidden");
-          modal.classList.remove("hidden");
-        }
-        function hideModal() {
-          backdrop.classList.add("hidden");
-          modal.classList.add("hidden");
-        }
-        
-        createButton.addEventListener("click", showModal);
-        closeButton.addEventListener("click", hideModal);
-        cancelButton.addEventListener("click", hideModal);
-        backdrop.addEventListener("click", hideModal);
-        
-        form.addEventListener("submit", function(event) {
-          event.preventDefault();
-          const formData = new FormData(form);
-          const xhr = new XMLHttpRequest();
-          xhr.open("POST", "https://formsubmit.co/proceduralitytutorials@gmail.com", true);
-          xhr.onload = function() {
-            if (xhr.status === 200) {
-              alert("Twit posted successfully!");
-              hideModal();
-              form.reset();
-            } else {
-              alert("Error posting twit.");
-            }
-          };
-          xhr.send(formData);
-        });
-      });
-    </script>
   </body>
 </html>

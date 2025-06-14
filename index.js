@@ -1,111 +1,108 @@
-/*
- * Add your JavaScript to this file to complete the assignment.
- */
-var modal = document.getElementById("create-twit-modal");
-var modalBackdrop = document.getElementById("modal-backdrop");
+document.addEventListener("DOMContentLoaded", function() {
+  // Modal variables
+  var modal = document.getElementById("create-twit-modal");
+  var modalBackdrop = document.getElementById("modal-backdrop");
 
-function displayNewTwitModal() {
-  modal.classList.remove("hidden");
-  modalBackdrop.classList.remove("hidden");
-  modal.classList.add("unhidden");
-  modal.classList.add("unhidden");
-}
-
-var createTwitButton = document.getElementById("create-twit-button");
-createTwitButton.addEventListener('click', displayNewTwitModal);
-
-function closeNewTwitModal() {
-  modal.classList.remove("unhidden");
-  modalBackdrop.classList.remove("unhidden");
-  modal.classList.add("hidden");
-  modalBackdrop.classList.add("hidden");
-}
-
-var closeButton = document.getElementsByClassName("modal-close-button")[0];
-closeButton.addEventListener('click', closeNewTwitModal);
-var cancelButton = document.getElementsByClassName("modal-cancel-button")[0];
-cancelButton.addEventListener('click', closeNewTwitModal);
-
-function createTwit() {
-  var twitText = document.getElementById("twit-text-input").value;
-  var author = document.getElementById("twit-attribution-input").value;
-
-  if(twitText == "" || author == "") {
-    alert("Please enter something into the 'twit text' or 'author' box");
-    return;
+  // Display the modal by removing "hidden" and adding "unhidden" classes.
+  function displayNewTwitModal() {
+    modal.classList.remove("hidden");
+    modalBackdrop.classList.remove("hidden");
+    // (Only add "unhidden" once, as adding it twice is redundant.)
+    modal.classList.add("unhidden");
   }
 
-  /*<article class="twit">
-    <div class="twit-icon">
-      <i class="fa fa-bullhorn"></i>
-    </div>
-    <div class="twit-content">
-      <p class="twit-text">
-        <--! Put the twit text entered by the user here. -->
-      </p>
-      <p class="twit-author">
-        <a href="#"><--! Put the twit author entered by the user here. --></a>
-      </p>
-    </div>
-  </article>*/
-  var accessDOM = document.getElementsByClassName("twit-container")[0];
+  // Attach event listener to the create-twit button.
+  var createTwitButton = document.getElementById("create-twit-button");
+  createTwitButton.addEventListener("click", displayNewTwitModal);
 
-  var twitArticle = document.createElement('article');
-  twitArticle.classList.add("twit");
+  // Close the modal by reverting the classes.
+  function closeNewTwitModal() {
+    modal.classList.remove("unhidden");
+    modalBackdrop.classList.remove("unhidden");
+    modal.classList.add("hidden");
+    modalBackdrop.classList.add("hidden");
+  }
 
-  var twitIconDiv = document.createElement('div');
-  twitIconDiv.classList.add("twit-icon");
-  twitArticle.appendChild(twitIconDiv);
+  // Attach event listeners to modal close and cancel buttons.
+  var closeButton = document.getElementsByClassName("modal-close-button")[0];
+  closeButton.addEventListener("click", closeNewTwitModal);
+  var cancelButton = document.getElementsByClassName("modal-cancel-button")[0];
+  cancelButton.addEventListener("click", closeNewTwitModal);
 
-  var bullhornIcon = document.createElement('i');
-  bullhornIcon.classList.add("fas");
-  bullhornIcon.classList.add("fa-bullhorn");
-  twitIconDiv.appendChild(bullhornIcon);
+  // Create a new twit post
+  function createTwit() {
+    // NOTE: Adjusted the element IDs to match your HTML.
+    var twitText = document.getElementById("twit-text").value;
+    var author = document.getElementById("twit-author").value;
 
-  var twitContentDiv = document.createElement('div');
-  twitContentDiv.classList.add("twit-content");
-  twitArticle.appendChild(twitContentDiv);
+    if (twitText === "" || author === "") {
+      alert("Please enter something into the 'twit text' or 'author' box");
+      return;
+    }
 
-  var twitTextPar = document.createElement('p');
-  twitTextPar.classList.add("twit-text");
-  twitTextPar.textContent = twitText;
-  twitContentDiv.appendChild(twitTextPar);
+    // Get the container for tweets
+    var accessDOM = document.getElementsByClassName("twit-container")[0];
 
-  var twitAuthorPar = document.createElement('p');
-  twitAuthorPar.classList.add("twit-author");
-  twitContentDiv.appendChild(twitAuthorPar);
+    // Create the article element with appropriate classes.
+    var twitArticle = document.createElement("article");
+    twitArticle.classList.add("twit");
 
-  var authorHyperlink = document.createElement('a');
-  authorHyperlink.href = "#";
-  authorHyperlink.textContent = author;
-  twitAuthorPar.appendChild(authorHyperlink);
+    // Create and append the twit icon div.
+    var twitIconDiv = document.createElement("div");
+    twitIconDiv.classList.add("twit-icon");
+    twitArticle.appendChild(twitIconDiv);
+    var bullhornIcon = document.createElement("i");
+    bullhornIcon.classList.add("fas", "fa-bullhorn");
+    twitIconDiv.appendChild(bullhornIcon);
 
-  accessDOM.appendChild(twitArticle);
+    // Create and append the content div.
+    var twitContentDiv = document.createElement("div");
+    twitContentDiv.classList.add("twit-content");
+    twitArticle.appendChild(twitContentDiv);
 
-  closeNewTwitModal();
+    // Create and set the text paragraph.
+    var twitTextPar = document.createElement("p");
+    twitTextPar.classList.add("twit-text");
+    twitTextPar.textContent = twitText;
+    twitContentDiv.appendChild(twitTextPar);
 
-}
+    // Create and set the author paragraph.
+    var twitAuthorPar = document.createElement("p");
+    twitAuthorPar.classList.add("twit-author");
+    twitContentDiv.appendChild(twitAuthorPar);
+    var authorHyperlink = document.createElement("a");
+    authorHyperlink.href = "#";
+    authorHyperlink.textContent = author;
+    twitAuthorPar.appendChild(authorHyperlink);
 
-var acceptButton = document.getElementsByClassName("modal-accept-button")[0];
-acceptButton.addEventListener('click', createTwit);
+    // Append the new twit element to the DOM
+    accessDOM.appendChild(twitArticle);
 
+    closeNewTwitModal();
+  }
+  
+  // Attach event listener to the modal accept button.
+  var acceptButton = document.getElementsByClassName("modal-accept-button")[0];
+  acceptButton.addEventListener("click", createTwit);
 
-
-function search() {
+  // Search function to filter twits.
+  function search() {
     var allTwits = document.getElementsByClassName("twit");
     console.log("Num of twits", allTwits.length);
     var userInput = document.getElementById("navbar-search-input").value.toLowerCase();
-
-    for(var i = 0; i < allTwits.length; i++) {
+    
+    // Loop in reverse order to safely remove non-matching nodes.
+    for (var i = allTwits.length - 1; i >= 0; i--) {
       var currTwit = allTwits[i].textContent.toLowerCase();
-
-      if(!currTwit.includes(userInput)) {
+      if (!currTwit.includes(userInput)) {
         allTwits[i].remove();
       }
     }
-}
+  }
 
-var searchButton = document.getElementById("navbar-search-button");
-searchButton.addEventListener('click', search);
-var instaSearch = document.getElementById("navbar-search-input");
-instaSearch.addEventListener('keyup', search);
+  // Attach event listeners to the navbar search elements.
+  var searchButton = document.getElementById("navbar-search-button");
+  searchButton.addEventListener("click", search);
+  var instaSearch = document.getElementById("navbar-search-input");
+  instaSearch.addEventListener("keyup", search);
+});

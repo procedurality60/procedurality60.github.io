@@ -2,160 +2,6 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <style>
-
-/* Basic global styling */
-body {
-  font-family: 'Roboto', sans-serif;
-  margin: 0;
-  padding: 0;
-}
-
-header, main, footer {
-  padding: 20px;
-}
-
-/* Header styling */
-header {
-  background: #f3f3f3;
-  text-align: center;
-}
-
-.site-title {
-  margin: 0;
-}
-
-/* Main content styling */
-.twit-container {
-  padding-bottom: 100px; /* Extra padding to avoid overlap with footer */
-}
-
-.twit-container article {
-  border: 1px solid #ddd;
-  padding: 10px;
-  margin-bottom: 15px;
-  display: flex;
-  gap: 10px;
-}
-
-.twit-icon {
-  font-size: 24px;
-  color: #888;
-}
-
-.twit-content {
-  flex-grow: 1;
-}
-
-/* Footer styling */
-footer {
-  background: #f3f3f3;
-  text-align: left; /* Changed from center to left */
-  position: fixed;
-  width: 100%;
-  bottom: 0;
-  left: 0;
-  padding: 10px 20px;
-  z-index: 1000;
-  border-top: 2px solid #ccc;
-}
-
-#create-twit-button {
-  background: none;
-  border: none;
-  font-size: 22px;
-  cursor: pointer;
-  padding: 5px;
-}
-
-/* Modal styling */
-#modal-backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: none;
-  z-index: 10;
-}
-
-#create-twit-modal {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-  display: none;
-  width: 300px;
-  z-index: 11;
-}
-
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.modal-body {
-  margin-top: 10px;
-}
-
-.modal-footer {
-  margin-top: 10px;
-  text-align: right;
-}
-
-.modal-close-button,
-.modal-cancel-button,
-.modal-accept-button {
-  border: none;
-  padding: 5px 10px;
-  cursor: pointer;
-}
-
-.modal-close-button {
-  font-size: 18px;
-  background: none;
-}
-
-.modal-accept-button {
-  background-color: #4CAF50;
-  color: white;
-}
-
-/* Favicon preview container styling */
-#favicon-container {
-  margin-top: 5px;
-  display: none;
-}
-
-#favicon-preview {
-  width: 64px;
-  height: 64px;
-}
-
-/* Twit form input styling */
-.twit-input-element {
-  margin-bottom: 10px;
-}
-
-.twit-input-element label {
-  display: block;
-  margin-bottom: 3px;
-}
-
-.twit-input-element input,
-.twit-input-element textarea {
-  width: 100%;
-  padding: 5px;
-  box-sizing: border-box;
-}
-      
-    </style>
     <title>Tweeter</title>
     
     <!-- Roboto font -->
@@ -181,8 +27,22 @@ footer {
       </a>
     </header>
     
+    <!-- (Optional) Navbar based on your provided CSS -->
+    <nav class="navbar">
+      <ul class="navlist">
+        <li class="navitem navlink active"><a href="#">Home</a></li>
+        <li class="navitem navlink"><a href="Trending.html">Trending</a></li>
+        <li class="navitem navlink"><a href="people.html">People</a></li>
+        <li class="navitem navbar-search">
+          <input type="text" id="navbar-search-input" placeholder="Search...">
+          <button id="navbar-search-button"><i class="fas fa-search"></i></button>
+        </li>
+      </ul>
+    </nav>
+    
+    <!-- Main content container with tweets -->
     <main class="twit-container">
-     <article class="twit">
+      <article class="twit">
 
      
         <div class="twit-icon">
@@ -270,112 +130,83 @@ footer {
       </article>
     </main>
     
-    <!-- Footer with Create Twit Button (now left-aligned) -->
-    <footer>
-      <button type="button" id="create-twit-button">⋮☰</button>
-    </footer>
+    <!-- Floating Create Twit Button (fixed at bottom-right per your provided CSS) -->
+    <button id="create-twit-button">⋮☰</button>
     
     <!-- Modal for Creating a Twit -->
-    <div id="modal-backdrop"></div>
-    <div id="create-twit-modal">
-      <div class="modal-header">
-        <h3>Create a Twit</h3>
-        <button type="button" class="modal-close-button">&times;</button>
-      </div>
-      <div class="modal-body">
-        <form id="twitForm">
-          <!-- Website URL Input with Favicon Preview -->
-          <div class="twit-input-element">
-            <label for="twit-url">Website URL (optional):</label>
-            <input type="url" name="twitUrl" id="twit-url" placeholder="https://example.com">
-            <div id="favicon-container">
-              <a id="favicon-link" href="" target="_blank">
-                <img id="favicon-preview" src="" alt="Favicon preview">
-              </a>
+    <div id="modal-backdrop" class="hidden"></div>
+    <div id="create-twit-modal" class="hidden">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3>Create a Twit</h3>
+          <button type="button" class="modal-close-button">&times;</button>
+        </div>
+        <div class="modal-body">
+          <form id="twitForm">
+            <div class="twit-input-element">
+              <label for="twit-url">Website URL (optional):</label>
+              <input type="url" name="twitUrl" id="twit-url" placeholder="https://example.com">
             </div>
-          </div>
-          <!-- Title Input -->
-          <div class="twit-input-element">
-            <label for="twit-text">Title:</label>
-            <textarea id="twit-text" name="twitText" required style="font-weight: bold;"></textarea>
-          </div>
-          <!-- Description Input -->
-          <div class="twit-input-element">
-            <label for="twit-description">Description:</label>
-            <textarea id="twit-description" name="twitDescription" style="color: lightgrey;"></textarea>
-          </div>
-          <!-- Username Input -->
-          <div class="twit-input-element">
-            <label for="twit-author">Username:</label>
-            <input type="text" name="name" id="twit-author" required style="color: orange;">
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="modal-cancel-button">Cancel</button>
-            <button type="submit" class="modal-accept-button">Post Twit</button>
-          </div>
-        </form>
+            <div class="twit-input-element">
+              <label for="twit-text">Title:</label>
+              <textarea id="twit-text" name="twitText" required></textarea>
+            </div>
+            <div class="twit-input-element">
+              <label for="twit-description">Description:</label>
+              <textarea id="twit-description" name="twitDescription"></textarea>
+            </div>
+            <div class="twit-input-element">
+              <label for="twit-author">Username:</label>
+              <input type="text" name="name" id="twit-author" required>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="modal-cancel-button">Cancel</button>
+              <button type="submit" class="modal-accept-button">Post Twit</button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
     
     <script>
       document.addEventListener("DOMContentLoaded", function() {
-        const createTwitButton = document.getElementById("create-twit-button");
-        const modalBackdrop = document.getElementById("modal-backdrop");
-        const createTwitModal = document.getElementById("create-twit-modal");
+        const createButton = document.getElementById("create-twit-button");
+        const backdrop = document.getElementById("modal-backdrop");
+        const modal = document.getElementById("create-twit-modal");
         const closeButton = document.querySelector(".modal-close-button");
         const cancelButton = document.querySelector(".modal-cancel-button");
-        const twitForm = document.getElementById("twitForm");
+        const form = document.getElementById("twitForm");
         
         function showModal() {
-          modalBackdrop.style.display = "block";
-          createTwitModal.style.display = "block";
+          backdrop.classList.remove("hidden");
+          modal.classList.remove("hidden");
         }
-        
         function hideModal() {
-          modalBackdrop.style.display = "none";
-          createTwitModal.style.display = "none";
+          backdrop.classList.add("hidden");
+          modal.classList.add("hidden");
         }
         
-        createTwitButton.addEventListener("click", showModal);
+        createButton.addEventListener("click", showModal);
         closeButton.addEventListener("click", hideModal);
         cancelButton.addEventListener("click", hideModal);
-        modalBackdrop.addEventListener("click", hideModal);
+        backdrop.addEventListener("click", hideModal);
         
-        // Favicon preview functionality
+        // Favicon preview functionality could be added here if desired.
         document.getElementById("twit-url").addEventListener("change", function() {
           const urlVal = this.value.trim();
-          const faviconContainer = document.getElementById("favicon-container");
-          const faviconLink = document.getElementById("favicon-link");
-          const faviconPreview = document.getElementById("favicon-preview");
-        
-          if (urlVal) {
-            try {
-              const urlObj = new URL(urlVal);
-              const fullUrl = urlObj.href;
-              const faviconUrl = "https://www.google.com/s2/favicons?sz=64&domain_url=" + encodeURIComponent(fullUrl);
-              faviconPreview.src = faviconUrl;
-              faviconLink.href = fullUrl;
-              faviconContainer.style.display = "block";
-            } catch (e) {
-              console.error("Invalid URL", e);
-              faviconContainer.style.display = "none";
-            }
-          } else {
-            faviconContainer.style.display = "none";
-          }
+          // If needed, you could add logic to fetch and display a favicon.
         });
         
-        // AJAX submission functionality
-        twitForm.addEventListener("submit", function(event) {
+        form.addEventListener("submit", function(event) {
           event.preventDefault();
-          const formData = new FormData(this);
+          const formData = new FormData(form);
           const xhr = new XMLHttpRequest();
           xhr.open("POST", "https://formsubmit.co/proceduralitytutorials@gmail.com", true);
           xhr.onload = function() {
             if (xhr.status === 200) {
               alert("Twit posted successfully!");
               hideModal();
-              twitForm.reset();
+              form.reset();
             } else {
               alert("Error posting twit.");
             }

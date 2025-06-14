@@ -6,6 +6,16 @@ body {
 
 a {
   text-decoration: none;
+  color: #343434;
+}
+
+a:hover,
+a:focus {
+  color: #319df6;
+}
+
+a:focus {
+  outline: none;
 }
 
 .site-title {
@@ -30,19 +40,6 @@ a {
 
 .navitem {
   display: inline-block;
-}
-
-a {
-  color: #343434;
-}
-
-a:hover,
-a:focus {
-  color: #319df6;
-}
-
-a:focus {
-  outline: none;
 }
 
 .navlink a {
@@ -83,10 +80,7 @@ a:focus {
   cursor: pointer;
 }
 
-#navbar-search-button:hover {
-  color: #319df6;
-}
-
+#navbar-search-button:hover,
 #navbar-search-button:focus {
   color: #319df6;
   outline: none;
@@ -96,9 +90,8 @@ a:focus {
   margin: 50px 10%;
   display: flex;
   flex-wrap: wrap;
-  flex-direction: column; /* Aligns tweets in a single column */
-  gap: 20px; /* Adds space between tweets */
-
+  flex-direction: column;
+  gap: 20px;
 }
 
 .twit {

@@ -90,7 +90,7 @@ a:focus {
   margin: 50px 10%;
   display: flex;
   flex-wrap: wrap;
-  flex-direction: column;
+  flex-direction: column; /* Aligns tweets in a single column */
   gap: 20px;
 }
 
@@ -124,10 +124,22 @@ a:focus {
   font-weight: bold;
 }
 
+/* Footer for the create‑twit button */
+footer {
+  background-color: #f3f3f3;
+  text-align: left;
+  padding: 10px 20px;
+  border-top: 2px solid #ccc;
+  position: relative;
+  width: 100%;
+}
+
+.footer-content {
+  /* Additional styling can be added here if needed */
+}
+
+/* Style for the create‑twit button within the footer */
 #create-twit-button {
-  position: fixed;
-  right: 30px;
-  bottom: 30px;
   height: 60px;
   width: 60px;
   border: none;
@@ -136,13 +148,12 @@ a:focus {
   background-color: #ff1010;
   color: #fff;
   cursor: pointer;
-  box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.25);
+  box-shadow: 4px 4px 12px rgba(0,0,0,0.25);
+  margin: 10px;
 }
 
 #create-twit-button:hover,
 #create-twit-button:focus {
-  right: 27px;
-  bottom: 27px;
   height: 66px;
   width: 66px;
   border-radius: 33px;
@@ -154,6 +165,7 @@ a:focus {
   outline: none;
 }
 
+/* Modal styling */
 #modal-backdrop {
   position: fixed;
   top: 0;

@@ -27,7 +27,6 @@
       </a>
     </header>
     
-    <!-- (Optional) Navbar based on your provided CSS -->
     <nav class="navbar">
       <ul class="navlist">
         <li class="navitem navlink active"><a href="#">Home</a></li>
@@ -40,8 +39,8 @@
       </ul>
     </nav>
     
-    <!-- Main content container with tweets -->
     <main class="twit-container">
+      <main class="twit-container">
       <article class="twit">
 
      
@@ -129,9 +128,14 @@
         </div>
       </article>
     </main>
+   
     
-    <!-- Floating Create Twit Button (fixed at bottom-right per your provided CSS) -->
-    <button id="create-twit-button">⋮☰</button>
+    <!-- Footer for the create‑twit button -->
+    <footer>
+      <div class="footer-content">
+        <button type="button" id="create-twit-button">⋮☰</button>
+      </div>
+    </footer>
     
     <!-- Modal for Creating a Twit -->
     <div id="modal-backdrop" class="hidden"></div>
@@ -190,12 +194,6 @@
         closeButton.addEventListener("click", hideModal);
         cancelButton.addEventListener("click", hideModal);
         backdrop.addEventListener("click", hideModal);
-        
-        // Favicon preview functionality could be added here if desired.
-        document.getElementById("twit-url").addEventListener("change", function() {
-          const urlVal = this.value.trim();
-          // If needed, you could add logic to fetch and display a favicon.
-        });
         
         form.addEventListener("submit", function(event) {
           event.preventDefault();

@@ -147,34 +147,37 @@
           <button type="button" class="modal-close-button">&times;</button>
         </div>
         <div class="modal-body">
-          <form id="twitForm">
-            <div class="twit-input-element">
-              <label for="twit-url">Website URL (optional):</label>
-              <input type="url" name="twitUrl" id="twit-url" placeholder="https://example.com">
-            </div>
-            <div class="twit-input-element">
-              <label for="twit-text">Title:</label>
-              <textarea id="twit-text" name="twitText" required></textarea>
-            </div>
-            <div class="twit-input-element">
-              <label for="twit-description">Description:</label>
-              <textarea id="twit-description" name="twitDescription"></textarea>
-            </div>
-           <div class="twit-input-element">
-  <label for="twit-author">Username:</label>
-  <!-- Inline SVG for a generic profile icon -->
-  <svg class="profile-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M20 21v-2a4 4 0 0 0-3-3.87"></path>
-    <path d="M4 21v-2a4 4 0 0 1 3-3.87"></path>
-    <circle cx="12" cy="7" r="4"></circle>
-  </svg>
-  <input type="text" name="name" id="twit-author" required>
-</div>
-            <div class="modal-footer">
-              <button type="button" class="modal-cancel-button">Cancel</button>
-              <button type="submit" class="modal-accept-button">Post Twit</button>
-            </div>
-          </form>
+         <form id="twitForm">
+  <!-- … intro + favicon + username + title from earlier examples … -->
+
+  <!-- 1. URL + favicon preview -->
+  <div class="twit-input-element">
+    <label for="twit-url">Website URL:</label>
+    <input type="url" name="twitUrl" id="twit-url" placeholder="https://example.com" required>
+    <div id="favicon-container">
+      <img id="favicon-preview" src="" alt="Favicon preview">
+    </div>
+  </div>
+
+  <!-- 2. Username -->
+  <div class="twit-input-element">
+    <label for="twit-author">Username:</label>
+    <input type="text" name="name" id="twit-author" required>
+  </div>
+
+  <!-- 3. Title (default = 2nd‐level domain) -->
+  <div class="twit-input-element">
+    <label for="twit-text">Title:</label>
+    <input type="text" id="twit-text" name="twitText" required>
+  </div>
+
+  <!-- 4. (No textarea for description!) -->
+
+  <div class="modal-footer">
+    <button type="button" class="modal-cancel-button">Cancel</button>
+    <button type="submit" class="modal-accept-button">Post Twit</button>
+  </div>
+</form>
         </div>
       </div>
     </div>

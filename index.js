@@ -1,17 +1,17 @@
 document.addEventListener("DOMContentLoaded", () => {
   // Modal & form elements
-  const modal           = document.getElementById("create-twit-modal");
-  const modalBackdrop   = document.getElementById("modal-backdrop");
-  const form            = document.getElementById("twitForm");
-  const urlInput        = document.getElementById("twit-url");
-  const faviconPreview  = document.getElementById("favicon-preview");
-  const titleInput      = document.getElementById("twit-text");
-  let   fetchedMetaDesc = "";
+  const modal          = document.getElementById("create-twit-modal");
+  const modalBackdrop  = document.getElementById("modal-backdrop");
+  const form           = document.getElementById("twitForm");
+  const urlInput       = document.getElementById("twit-url");
+  const faviconPreview = document.getElementById("favicon-preview");
+  const titleInput     = document.getElementById("twit-text");
+  let   fetchedMetaDesc= "";
 
-  // Show/hide modal
+  // Show / hide modal
   function showModal() {
-    modal.classList.remove("hidden");
     modalBackdrop.classList.remove("hidden");
+    modal.classList.remove("hidden");
     modal.classList.add("unhidden");
   }
   function hideModal() {
@@ -21,39 +21,39 @@ document.addEventListener("DOMContentLoaded", () => {
     modalBackdrop.classList.add("hidden");
   }
 
-  // Wire up modal buttons
+  // Wire modal buttons
   document.getElementById("create-twit-button")
-    .addEventListener("click", showModal);
+          .addEventListener("click", showModal);
   document.querySelector(".modal-close-button")
-    .addEventListener("click", hideModal);
+          .addEventListener("click", hideModal);
   document.querySelector(".modal-cancel-button")
-    .addEventListener("click", hideModal);
+          .addEventListener("click", hideModal);
 
   // On URL change: preview favicon, default title, fetch meta description
   urlInput.addEventListener("change", () => {
     const val = urlInput.value.trim();
     if (!val) {
-      faviconPreview.src = "";
-      titleInput.value   = "";
-      fetchedMetaDesc    = "";
+      faviconPreview.src    = "";
+      titleInput.value      = "";
+      fetchedMetaDesc       = "";
       return;
     }
 
     try {
       const urlObj = new URL(val);
-      // 1) favicon preview
+      // 1) Favicon
       faviconPreview.src = 
         "https://www.google.com/s2/favicons?sz=64&domain_url=" 
         + encodeURIComponent(val);
 
-      // 2) default title = second-level domain
+      // 2) Default title = second-level domain
       const parts = urlObj.hostname.split(".");
       titleInput.value = parts.length >= 2
         ? parts[parts.length - 2]
         : urlObj.hostname;
 
-      // 3) fetch remote meta description via CORS proxy
-      fetchedMetaDesc = ""; // reset first
+      // 3) Fetch remote meta description via CORS proxy
+      fetchedMetaDesc = "";
       fetch("https://cors-anywhere.herokuapp.com/" + val)
         .then(r => r.text())
         .then(html => {
@@ -65,15 +65,15 @@ document.addEventListener("DOMContentLoaded", () => {
         .catch(() => {
           fetchedMetaDesc = "";
         });
-    } catch (e) {
-      console.error("Invalid URL", e);
+
+    } catch (err) {
+      console.error("Invalid URL", err);
     }
   });
 
   // AJAX form submit + render tweet
   form.addEventListener("submit", e => {
     e.preventDefault();
-
     const data     = new FormData(form);
     const twitText = data.get("twitText").trim();
     const author   = data.get("name").trim();
@@ -81,18 +81,20 @@ document.addEventListener("DOMContentLoaded", () => {
       return alert("Please fill in both URL/title and username.");
     }
 
-    // send via Fetch, no redirect/reload
+    // Capture current favicon preview
+    const faviconUrl = faviconPreview.src || "";
+
     fetch("https://formsubmit.co/proceduralitytutorials@gmail.com", {
       method: "POST",
       body: data
     })
     .then(res => {
-      if (!res.ok) throw new Error("Network response was not OK");
-      // on success: add to DOM
-      appendTweet(twitText, author, fetchedMetaDesc);
+      if (!res.ok) throw new Error("Network response not OK");
+      // On success: append tweet, reset form, hide modal
+      appendTweet(twitText, author, fetchedMetaDesc, faviconUrl);
       form.reset();
       hideModal();
-      // reset favicon/title/desc placeholders
+      // Reset preview inputs
       faviconPreview.src = "";
       titleInput.value   = "";
       fetchedMetaDesc    = "";
@@ -103,27 +105,36 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Create & append a tweet element (with orange username + profile SVG + meta desc)
-  function appendTweet(text, user, description) {
+  // Build and append a tweet element
+  function appendTweet(text, user, description, faviconUrl) {
     const container = document.querySelector(".twit-container");
     const article   = document.createElement("article");
     article.classList.add("twit");
 
-    // profile-icon SVG (orange stroke)
+    // Icon container
     const iconDiv = document.createElement("div");
     iconDiv.classList.add("twit-icon");
-    iconDiv.innerHTML = `
-      <svg class="profile-icon" width="32" height="32"
-           viewBox="0 0 24 24" fill="none" stroke="orange" 
-           stroke-width="2" stroke-linecap="round" 
-           stroke-linejoin="round">
-        <path d="M20 21v-2a4 4 0 0 0-3-3.87"></path>
-        <path d="M4 21v-2a4 4 0 0 1 3-3.87"></path>
-        <circle cx="12" cy="7" r="4"></circle>
-      </svg>`;
+
+    if (faviconUrl) {
+      const img = document.createElement("img");
+      img.src   = faviconUrl;
+      img.alt   = "";
+      img.classList.add("twit-favicon");
+      iconDiv.appendChild(img);
+    } else {
+      iconDiv.innerHTML = `
+        <svg class="profile-icon" width="32" height="32"
+             viewBox="0 0 24 24" fill="none" stroke="orange"
+             stroke-width="2" stroke-linecap="round"
+             stroke-linejoin="round">
+          <path d="M20 21v-2a4 4 0 0 0-3-3.87"></path>
+          <path d="M4 21v-2a4 4 0 0 1 3-3.87"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+        </svg>`;
+    }
     article.appendChild(iconDiv);
 
-    // content div
+    // Content
     const contentDiv = document.createElement("div");
     contentDiv.classList.add("twit-content");
     contentDiv.innerHTML = `
@@ -141,7 +152,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function search() {
     const all = document.getElementsByClassName("twit");
     const q   = document.getElementById("navbar-search-input")
-                  .value.toLowerCase();
+                          .value.toLowerCase();
     for (let i = all.length - 1; i >= 0; i--) {
       if (!all[i].textContent.toLowerCase().includes(q)) {
         all[i].remove();
@@ -149,7 +160,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
   document.getElementById("navbar-search-button")
-    .addEventListener("click", search);
+          .addEventListener("click", search);
   document.getElementById("navbar-search-input")
-    .addEventListener("keyup", search);
+          .addEventListener("keyup", search);
 });

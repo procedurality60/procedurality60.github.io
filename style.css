@@ -3,6 +3,11 @@ body {
   margin: 0;
   background-color: #eee;
 }
+.twit-description {
+  margin: 6px 0 0;
+  font-size: 14px;
+  color: #555;
+}
 
 .profile-icon {
   margin-right: 10px;
